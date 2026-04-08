@@ -10,16 +10,6 @@
     /* ── RESET & BASE ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    [data-theme="dark"] {
-    --ink:     #e8e4da;
-    --ink-2:   #a0a09a;
-    --ink-3:   #5a5a56;
-    --paper:   #18181a;
-    --paper-2: #202022;
-    --paper-3: #2a2a2c;
-    --rule:    rgba(232,228,218,0.10);
-    }
-
     :root {
       --ink:     #1a1a18;
       --ink-2:   #4a4a46;
@@ -34,6 +24,16 @@
       --sans:    'DM Sans', system-ui, sans-serif;
       --mono:    'DM Mono', monospace;
       --max:     760px;
+    }
+
+    :root[data-theme="dark"] {
+      --ink:     #e8e4da;
+      --ink-2:   #a0a09a;
+      --ink-3:   #5a5a56;
+      --paper:   #18181a;
+      --paper-2: #202022;
+      --paper-3: #2a2a2c;
+      --rule:    rgba(232,228,218,0.10);
     }
 
     body {
