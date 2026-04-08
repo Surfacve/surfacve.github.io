@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Learn as I go</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --ink-2: #4a4a46;
+      --ink-3: #8a8a84;
+      --paper: #f9f7f2;
+      --paper-2: #f2efe8;
+      --paper-3: #e8e4da;
+      --accent: #b85c38;
+      --rule: rgba(26, 26, 24, 0.10);
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
+      --mono: "DM Mono", monospace;
+      --max: 760px;
+    }
+
+    :root[data-theme="dark"] {
+      --ink: #e8e4da;
+      --ink-2: #a0a09a;
+      --ink-3: #5a5a56;
+      --paper: #18181a;
+      --paper-2: #202022;
+      --paper-3: #2a2a2c;
+      --rule: rgba(232, 228, 218, 0.10);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    header {
+      border-bottom: 1px solid var(--rule);
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      background: var(--paper);
+      position: relative;
+    }
+
+    header::before {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 48px;
+      background: var(--accent);
+      margin: 0 auto 1.5rem;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .site-tagline {
+      font-size: 0.875rem;
+      color: var(--ink-3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover,
+    nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .page-intro {
+      padding: 3rem 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+
+    .page-intro p {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      max-width: 620px;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--ink-2);
+      margin-bottom: 1rem;
+    }
+
+    .interest-list {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .interest-list li {
+      padding: 1rem 1.25rem;
+      background: var(--paper-2);
+      border: 1px solid var(--paper-3);
+      border-radius: 4px;
+      color: var(--ink-2);
+    }
+
+    .interest-list strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+      font-weight: 500;
+    }
+
+    .pullquote {
+      border-left: 2px solid var(--accent);
+      padding: 0.25rem 0 0.25rem 1.5rem;
+      margin: 1.75rem 0;
+    }
+
+    .pullquote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      margin-top: 2rem;
+    }
+
+    footer::before {
+      content: "*";
+      display: block;
+      font-size: 1rem;
+      color: var(--paper-3);
+      margin-bottom: 0.5rem;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dark-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      header { padding-top: 5rem; }
+      nav { gap: 1.25rem; }
+      .dark-toggle {
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="site-name">Software on the go</h1>
+    <p class="site-tagline">How does an engineer keep up · Global and London, England</p>
+    <button class="dark-toggle" id="darkBtn" aria-label="Toggle dark mode">
+      <span id="darkIcon">◑</span> <span id="darkText">Dark</span>
+    </button>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html" aria-current="page">About</a>
+    <a href="cv.html">CV</a>
+    <a href="https://github.com/surfacve">GitHub</a>
+  </nav>
+
+  <main class="container">
+    <section class="page-intro">
+      <p>
+        This page is the slower, more personal companion to the journal. It is where I can explain
+        what kind of engineer I am becoming, what holds my attention, and what keeps me returning to
+        software as a craft.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Intro</p>
+      <h2>Who I am, beyond a project list</h2>
+      <p>
+        I am interested in software as both a practical discipline and a way of thinking. I like the
+        mix of structure and curiosity it demands: careful systems, clear writing, thoughtful tradeoffs,
+        and enough experimentation to keep things alive.
+      </p>
+      <p>
+        I am especially drawn to engineering work that rewards patience. The kind where understanding
+        the shape of a problem matters just as much as writing the code. That includes debugging,
+        architecture, documentation, interface design, and learning tools deeply enough to make them
+        feel calm to use.
+      </p>
+      <div class="pullquote">
+        <p>"I want the work to be rigorous, but I also want it to stay human."</p>
+      </div>
+      <p>
+        This site is part notebook, part workshop, and part public record of what I am trying to learn well.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Interests</p>
+      <h2>The themes I keep coming back to</h2>
+      <ul class="interest-list">
+        <li>
+          <strong>Engineering craft</strong>
+          I care about readable systems, good naming, reliable behavior, and the small choices that make code easier to maintain.
+        </li>
+        <li>
+          <strong>Tools for thinking</strong>
+          I am drawn to documentation, note-making, visual explanation, and workflows that help ideas stick instead of disappear.
+        </li>
+        <li>
+          <strong>Creative technical work</strong>
+          I enjoy the overlap between software, design, writing, and building things in public.
+        </li>
+        <li>
+          <strong>Life outside the IDE</strong>
+          I also want this page to leave room for the interests, habits, and curiosities that shape how I work.
+        </li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Right Now</p>
+      <h2>What I am learning and building at the moment</h2>
+      <p>
+        Right now I am using this site as a low-friction place to document what I learn. That includes
+        small web experiments, ideas from talks or books, and the kinds of technical rabbit holes that are
+        too valuable to lose in private notes.
+      </p>
+      <p>
+        I am also shaping this into a more complete home on the web: one page for ongoing writing, one page
+        for the story behind the work, and one page that distills the strongest engineering achievements into
+        something closer to a public CV.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Updated whenever something is worth writing down · Hosted on <a href="https://pages.github.com">GitHub Pages</a></p>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById("darkBtn");
+    const icon = document.getElementById("darkIcon");
+    const text = document.getElementById("darkText");
+
+    function setTheme(theme) {
+      if (theme === "dark") {
+        root.setAttribute("data-theme", "dark");
+        icon.textContent = "○";
+        text.textContent = "Light";
+        localStorage.setItem("theme", "dark");
+      } else {
+        root.removeAttribute("data-theme");
+        icon.textContent = "◑";
+        text.textContent = "Dark";
+        localStorage.setItem("theme", "light");
+      }
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    setTheme(savedTheme === "dark" ? "dark" : "light");
+
+    btn.addEventListener("click", () => {
+      const isDark = root.getAttribute("data-theme") === "dark";
+      setTheme(isDark ? "light" : "dark");
+    });
+  </script>
+</body>
+</html>
