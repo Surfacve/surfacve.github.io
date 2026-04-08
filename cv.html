@@ -254,6 +254,65 @@
       color: var(--accent);
     }
 
+    .scroll-wheel {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      background: rgba(249, 247, 242, 0.86);
+      display: grid;
+      place-items: center;
+      color: var(--ink-2);
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s ease;
+    }
+
+    :root[data-theme="dark"] .scroll-wheel {
+      background: rgba(24, 24, 26, 0.86);
+    }
+
+    .scroll-wheel:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .scroll-wheel svg {
+      width: 52px;
+      height: 52px;
+      transform: rotate(-90deg);
+    }
+
+    .scroll-wheel-track,
+    .scroll-wheel-progress {
+      fill: none;
+      stroke-width: 3;
+    }
+
+    .scroll-wheel-track {
+      stroke: var(--paper-3);
+    }
+
+    .scroll-wheel-progress {
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-dasharray: 138.2;
+      stroke-dashoffset: 138.2;
+      transition: stroke-dashoffset 0.12s linear;
+    }
+
+    .scroll-wheel-label {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     @media (max-width: 700px) {
       .highlight-grid,
       .skill-grid {
@@ -366,6 +425,14 @@
     </section>
   </main>
 
+  <button class="scroll-wheel" id="scrollWheel" type="button" aria-label="Scroll to top">
+    <svg viewBox="0 0 52 52" aria-hidden="true">
+      <circle class="scroll-wheel-track" cx="26" cy="26" r="22"></circle>
+      <circle class="scroll-wheel-progress" id="scrollWheelProgress" cx="26" cy="26" r="22"></circle>
+    </svg>
+    <span class="scroll-wheel-label" id="scrollWheelLabel">0%</span>
+  </button>
+
   <footer>
     <p>Updated whenever something is worth writing down · Hosted on <a href="https://pages.github.com">GitHub Pages</a></p>
   </footer>
@@ -375,6 +442,10 @@
     const btn = document.getElementById("darkBtn");
     const icon = document.getElementById("darkIcon");
     const text = document.getElementById("darkText");
+    const scrollWheel = document.getElementById("scrollWheel");
+    const scrollWheelProgress = document.getElementById("scrollWheelProgress");
+    const scrollWheelLabel = document.getElementById("scrollWheelLabel");
+    const wheelLength = 138.2;
 
     function setTheme(theme) {
       if (theme === "dark") {
@@ -397,6 +468,24 @@
       const isDark = root.getAttribute("data-theme") === "dark";
       setTheme(isDark ? "light" : "dark");
     });
+
+    function updateScrollWheel() {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
+      const percent = Math.round(progress * 100);
+
+      scrollWheelProgress.style.strokeDashoffset = wheelLength * (1 - progress);
+      scrollWheelLabel.textContent = `${percent}%`;
+    }
+
+    scrollWheel.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", updateScrollWheel, { passive: true });
+    window.addEventListener("resize", updateScrollWheel);
+    updateScrollWheel();
   </script>
 </body>
 </html>
