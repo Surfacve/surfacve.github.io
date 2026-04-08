@@ -90,6 +90,7 @@
       font-size: 0.8rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -97,7 +98,8 @@
       text-decoration: none;
       transition: color 0.2s;
     }
-    nav a:hover { color: var(--accent); }
+    nav a:hover,
+    nav a[aria-current="page"] { color: var(--accent); }
 
     /* ── LAYOUT ── */
     .container {
@@ -309,8 +311,13 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
+      header { padding-top: 5rem; }
       .image-grid { grid-template-columns: 1fr; }
       nav { gap: 1.25rem; }
+      .dark-toggle {
+        right: 50%;
+        transform: translateX(50%);
+      }
     }
 
     .dark-toggle {
@@ -351,8 +358,9 @@
     </header>
 
   <nav>
-    <a href="#entries">Entries</a>
-    <a href="#about">About</a>
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="about.html">About</a>
+    <a href="cv.html">CV</a>
     <a href="https://github.com/surfacve">GitHub</a>
   </nav>
 
@@ -361,11 +369,12 @@
     <!-- ═══════════════════════════════════════
          INTRO — short bio / what this journal is
     ════════════════════════════════════════════ -->
-    <section class="intro" id="about">
+    <section class="intro">
       <p>
         This is where I document what I'm learning — honestly, messily, in real time.
         Notes on code, design, tools, books, and whatever else catches my attention.
-        Updated as I go. thoughts are my own
+        For the fuller story behind the work, visit the <a href="about.html" style="color: var(--accent);">About page</a>.
+        For a concise summary of achievements and experience, head to the <a href="cv.html" style="color: var(--accent);">CV page</a>.
       </p>
     </section>
 
