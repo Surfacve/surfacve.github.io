@@ -344,10 +344,10 @@
     <h1 class="site-name">Software on the go</h1>
     <p class="site-tagline">How does an engineer keep up &nbsp;·&nbsp; Global &amp; London, England</p>
 
-    <button class="dark-toggle" onclick="toggleDark()" id="darkBtn" 
-            aria-label="Toggle dark mode">
-      <span id="darkIcon">◑</span> Dark
+    <button class="dark-toggle" id="darkBtn" aria-label="Toggle dark mode">
+      <span id="darkIcon">◑</span> <span id="darkText">Dark</span>
     </button>
+    
     </header>
 
   <nav>
@@ -471,28 +471,32 @@
   </footer>
 
   <script>
+    const root = document.documentElement;
     const btn = document.getElementById('darkBtn');
     const icon = document.getElementById('darkIcon');
+    const text = document.getElementById('darkText');
   
-    // remember preference across visits
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      icon.textContent = '○';
-      btn.innerHTML = '<span id="darkIcon">○</span> Light';
-    }
-  
-    function toggleDark() {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        btn.innerHTML = '<span>◑</span> Dark';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        icon.textContent = '○';
+        text.textContent = 'Light';
         localStorage.setItem('theme', 'dark');
-        btn.innerHTML = '<span>○</span> Light';
+      } else {
+        root.removeAttribute('data-theme');
+        icon.textContent = '◑';
+        text.textContent = 'Dark';
+        localStorage.setItem('theme', 'light');
       }
     }
+  
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+  
+    btn.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      setTheme(isDark ? 'light' : 'dark');
+    });
   </script>
 </body>
 </html>
