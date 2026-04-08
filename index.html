@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn as I go</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [data-theme="dark"] {
+    --ink:     #e8e4da;
+    --ink-2:   #a0a09a;
+    --ink-3:   #5a5a56;
+    --paper:   #18181a;
+    --paper-2: #202022;
+    --paper-3: #2a2a2c;
+    --rule:    rgba(232,228,218,0.10);
+    }
+
+    :root {
+      --ink:     #1a1a18;
+      --ink-2:   #4a4a46;
+      --ink-3:   #8a8a84;
+      --paper:   #f9f7f2;
+      --paper-2: #f2efe8;
+      --paper-3: #e8e4da;
+      --accent:  #b85c38;
+      --accent-2:#d4845e;
+      --rule:    rgba(26,26,24,0.10);
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'DM Sans', system-ui, sans-serif;
+      --mono:    'DM Mono', monospace;
+      --max:     760px;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 1px solid var(--rule);
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      background: var(--paper);
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 48px;
+      background: var(--accent);
+      margin: 0 auto 1.5rem;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .site-tagline {
+      font-size: 0.875rem;
+      color: var(--ink-3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 3rem 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+
+    .intro p {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      max-width: 540px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── ENTRY ── */
+    .entry {
+      margin-bottom: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .entry:last-child { border-bottom: none; }
+
+    .entry-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .entry-date {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ink-3);
+    }
+
+    .entry-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--paper-3);
+      color: var(--ink-2);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .entry-tag.new    { background: #e8f0e4; color: #3a6b2a; }
+    .entry-tag.insight { background: #e8e4f5; color: #4a3a82; }
+    .entry-tag.project { background: #f5e8e4; color: #82402a; }
+    .entry-tag.resource { background: #e4eff5; color: #2a5a82; }
+
+    .entry h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .entry h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .entry p {
+      color: var(--ink-2);
+      margin-bottom: 1rem;
+    }
+
+    /* ── MEDIA ── */
+    .entry-image {
+      width: 100%;
+      border-radius: 4px;
+      margin: 1.5rem 0;
+      display: block;
+      background: var(--paper-3);
+    }
+
+    .entry-image-caption {
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      text-align: center;
+      margin-top: -0.75rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    /* image grid for multiple photos */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 1.5rem 0;
+    }
+    .image-grid img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+    }
+
+    /* ── CODE BLOCK ── */
+    .entry pre {
+      background: var(--ink);
+      color: #e8e4da;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .entry code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--paper-3);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    /* ── PULLQUOTE ── */
+    .pullquote {
+      border-left: 2px solid var(--accent);
+      padding: 0.25rem 0 0.25rem 1.5rem;
+      margin: 1.75rem 0;
+    }
+    .pullquote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    /* ── RESOURCE LINKS ── */
+    .resources {
+      background: var(--paper-2);
+      border: 1px solid var(--paper-3);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .resources h4 {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .resources ul {
+      list-style: none;
+      padding: 0;
+    }
+    .resources li {
+      padding: 3px 0;
+      font-size: 0.9rem;
+    }
+    .resources a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .resources a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      margin-top: 2rem;
+    }
+    footer::before {
+      content: '✦';
+      display: block;
+      font-size: 1rem;
+      color: var(--paper-3);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .image-grid { grid-template-columns: 1fr; }
+      nav { gap: 1.25rem; }
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dark-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  </style>
+</head>
+<script>
+  const btn = document.getElementById('darkBtn');
+  const icon = document.getElementById('darkIcon');
+
+  // remember preference across visits
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    icon.textContent = '○';
+    btn.innerHTML = '<span id="darkIcon">○</span> Light';
+  }
+
+  function toggleDark() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      btn.innerHTML = '<span>◑</span> Dark';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      btn.innerHTML = '<span>○</span> Light';
+    }
+  }
+</script>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HEADER — edit your name & tagline here
+  ════════════════════════════════════════════ -->
+  <header>
+    <h1 class="site-name">Software on the go</h1>
+    <p class="site-tagline">How does an engineer keep up &nbsp;·&nbsp; Global &amp; London, England</p>
+
+    <button class="dark-toggle" onclick="toggleDark()" id="darkBtn" 
+            aria-label="Toggle dark mode">
+      <span id="darkIcon">◑</span> Dark
+    </button>
+    </header>
+
+  <nav>
+    <a href="#entries">Entries</a>
+    <a href="#about">About</a>
+    <a href="https://github.com/surfacve">GitHub</a>
+  </nav>
+
+  <main class="container">
+
+    <!-- ═══════════════════════════════════════
+         INTRO — short bio / what this journal is
+    ════════════════════════════════════════════ -->
+    <section class="intro" id="about">
+      <p>
+        This is where I document what I'm learning — honestly, messily, in real time.
+        Notes on code, design, tools, books, and whatever else catches my attention.
+        Updated as I go. thoughts are my own
+      </p>
+    </section>
+
+    <div id="entries">
+      <p class="section-label">Entries</p>
+
+      <!-- ═══════════════════════════════════════
+           ✏️  ADD NEW ENTRIES HERE — copy the block
+           below and paste it above this comment.
+           Change the date, tag, title, and content.
+      ════════════════════════════════════════════ -->
+
+
+      <!-- ── ENTRY EXAMPLE 3: with code ── -->
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="entry-date">2025-04-06</span>
+          <span class="entry-tag project">Project</span>
+        </div>
+        <h2>Building this site: a <em>pleasantly simple</em> start</h2>
+        <p>
+          Set up GitHub Pages today. The whole thing took about 20 minutes — create a repo,
+          enable Pages in Settings, drop in an <code>index.html</code>. That's it.
+        </p>
+        <p>
+          The thing I keep coming back to: resist the urge to over-engineer. Plain HTML is
+          fast, readable, and needs no build step. Future me will thank present me for this.
+        </p>
+        <pre><!-- To add your site to GitHub Pages:
+1. Settings → Pages → Deploy from branch
+2. Branch: main, Folder: / (root)
+3. Save → your site is live ✓ --></pre>
+        <div class="pullquote">
+          <p>"The best tool for a job is often the one that gets out of your way."</p>
+        </div>
+      </article>
+
+
+      <!-- ── ENTRY EXAMPLE 2: with image grid ── -->
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="entry-date">2025-04-03</span>
+          <span class="entry-tag insight">Insight</span>
+        </div>
+        <h2>Sketchnotes from a talk on <em>systems thinking</em></h2>
+        <p>
+          Attended an online talk and tried sketchnoting for the first time.
+          Harder than it looks — you're listening, processing, and drawing simultaneously.
+          But the notes stuck far better than my usual wall of text.
+        </p>
+
+        <!-- IMAGE GRID — upload your images to /images/ in your repo
+             then change the src values below -->
+        <div class="image-grid">
+          <img src="images/sketchnote-1.jpg" alt="Sketchnote page one" />
+          <img src="images/sketchnote-2.jpg" alt="Sketchnote page two" />
+        </div>
+        <p class="entry-image-caption">Two pages of sketchnotes from the talk</p>
+
+        <p>
+          Key idea: in complex systems, the obvious intervention point is often not the
+          most effective one. You have to trace feedback loops.
+        </p>
+        <div class="resources">
+          <h4>Linked</h4>
+          <ul>
+            <li><a href="https://www.youtube.com">Talk recording (YouTube)</a></li>
+            <li><a href="https://example.com">Thinking in Systems – Donella Meadows</a></li>
+          </ul>
+        </div>
+      </article>
+
+
+      <!-- ── ENTRY EXAMPLE 1: text only ── -->
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="entry-date">2026-04-08</span>
+          <span class="entry-tag new">New topic</span>
+        </div>
+        <h2>Starting out: why <em>document in public?</em></h2>
+        <p>
+          I think I want a central point of documentation for all the things I read and want to build,
+          engage with and take apart. I want completeness, detail and order. Maybe a little bit of accountability
+          and fun creating in public.
+        </p>
+        <p>
+          I intend to try my hand at a series of things I have bookmarked over the year, account for a lot of rapid
+          change in software engineering, and also navigate its (my) direction. 
+        </p>
+        <div class="pullquote">
+          <p>"Famous last words"</p>
+        </div>
+        <p>
+          Starting with the basics: HTML, GitHub, keeping it dead simple.
+        </p>
+      </article>
+
+    </div><!-- /#entries -->
+  </main>
+
+  <footer>
+    <p>Updated whenever something is worth writing down &nbsp;·&nbsp; Hosted on <a href="https://pages.github.com" style="color:inherit">GitHub Pages</a></p>
+  </footer>
+
+</body>
+</html>
