@@ -335,30 +335,6 @@
     }
   </style>
 </head>
-<script>
-  const btn = document.getElementById('darkBtn');
-  const icon = document.getElementById('darkIcon');
-
-  // remember preference across visits
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    icon.textContent = '○';
-    btn.innerHTML = '<span id="darkIcon">○</span> Light';
-  }
-
-  function toggleDark() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-      btn.innerHTML = '<span>◑</span> Dark';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-      btn.innerHTML = '<span>○</span> Light';
-    }
-  }
-</script>
 <body>
 
   <!-- ═══════════════════════════════════════
@@ -494,5 +470,29 @@
     <p>Updated whenever something is worth writing down &nbsp;·&nbsp; Hosted on <a href="https://pages.github.com" style="color:inherit">GitHub Pages</a></p>
   </footer>
 
+  <script>
+    const btn = document.getElementById('darkBtn');
+    const icon = document.getElementById('darkIcon');
+  
+    // remember preference across visits
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      icon.textContent = '○';
+      btn.innerHTML = '<span id="darkIcon">○</span> Light';
+    }
+  
+    function toggleDark() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        btn.innerHTML = '<span>◑</span> Dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        btn.innerHTML = '<span>○</span> Light';
+      }
+    }
+  </script>
 </body>
 </html>
