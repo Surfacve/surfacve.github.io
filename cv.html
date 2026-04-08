@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV | Learn as I go</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --ink-2: #4a4a46;
+      --ink-3: #8a8a84;
+      --paper: #f9f7f2;
+      --paper-2: #f2efe8;
+      --paper-3: #e8e4da;
+      --accent: #b85c38;
+      --rule: rgba(26, 26, 24, 0.10);
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
+      --mono: "DM Mono", monospace;
+      --max: 820px;
+    }
+
+    :root[data-theme="dark"] {
+      --ink: #e8e4da;
+      --ink-2: #a0a09a;
+      --ink-3: #5a5a56;
+      --paper: #18181a;
+      --paper-2: #202022;
+      --paper-3: #2a2a2c;
+      --rule: rgba(232, 228, 218, 0.10);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    header {
+      border-bottom: 1px solid var(--rule);
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      background: var(--paper);
+      position: relative;
+    }
+
+    header::before {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 48px;
+      background: var(--accent);
+      margin: 0 auto 1.5rem;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .site-tagline {
+      font-size: 0.875rem;
+      color: var(--ink-3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover,
+    nav a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .page-intro {
+      padding: 3rem 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 3rem;
+    }
+
+    .page-intro p {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      max-width: 680px;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--ink-2);
+      margin-bottom: 1rem;
+    }
+
+    .highlight-grid,
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: var(--paper-2);
+      border: 1px solid var(--paper-3);
+      border-radius: 4px;
+      padding: 1.2rem 1.25rem;
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .card p {
+      margin-bottom: 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-item {
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--accent);
+    }
+
+    .timeline-meta {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .note {
+      padding: 1rem 1.25rem;
+      background: var(--paper-2);
+      border: 1px solid var(--paper-3);
+      border-radius: 4px;
+      color: var(--ink-2);
+      margin-top: 1.5rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      margin-top: 2rem;
+    }
+
+    footer::before {
+      content: "*";
+      display: block;
+      font-size: 1rem;
+      color: var(--paper-3);
+      margin-bottom: 0.5rem;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dark-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 700px) {
+      .highlight-grid,
+      .skill-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header { padding-top: 5rem; }
+      nav { gap: 1.25rem; }
+      .dark-toggle {
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="site-name">Software on the go</h1>
+    <p class="site-tagline">How does an engineer keep up · Global and London, England</p>
+    <button class="dark-toggle" id="darkBtn" aria-label="Toggle dark mode">
+      <span id="darkIcon">◑</span> <span id="darkText">Dark</span>
+    </button>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="cv.html" aria-current="page">CV</a>
+    <a href="https://github.com/surfacve">GitHub</a>
+  </nav>
+
+  <main class="container">
+    <section class="page-intro">
+      <p>
+        This page is designed to become the scannable summary: strongest achievements first, then
+        the experience, projects, and tools that support them. For now it is a solid foundation you
+        can refine into a public CV over time.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Selected Highlights</p>
+      <h2>Start with the work worth remembering</h2>
+      <div class="highlight-grid">
+        <article class="card">
+          <h3>Professional impact</h3>
+          <p>Use this block for the delivery that changed a team, product, customer outcome, or internal engineering workflow.</p>
+        </article>
+        <article class="card">
+          <h3>Systems thinking</h3>
+          <p>Summarize a project where architecture, reliability, or careful debugging mattered more than sheer implementation speed.</p>
+        </article>
+        <article class="card">
+          <h3>Builder energy</h3>
+          <p>Showcase a hobby project, technical experiment, or self-directed build that demonstrates curiosity and initiative.</p>
+        </article>
+        <article class="card">
+          <h3>Communication</h3>
+          <p>Keep one slot for documentation, mentorship, developer experience, or any engineering work that made other people more effective.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Experience</p>
+      <h2>Major roles and projects</h2>
+      <div class="timeline">
+        <article class="timeline-item">
+          <p class="timeline-meta">Role or project title · Dates</p>
+          <p>Add your strongest professional role here with a short, impact-focused summary and one or two concrete achievements.</p>
+        </article>
+        <article class="timeline-item">
+          <p class="timeline-meta">Role or project title · Dates</p>
+          <p>Add a second entry for another meaningful role, major project, or transition point in your engineering journey.</p>
+        </article>
+        <article class="timeline-item">
+          <p class="timeline-meta">Hobby or independent work · Dates</p>
+          <p>Include a personal build, volunteer work, open-source contribution, or deep technical exploration that says something important about how you work.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Skills</p>
+      <h2>Tools and strengths, kept readable</h2>
+      <div class="skill-grid">
+        <article class="card">
+          <h3>Core engineering</h3>
+          <p>Languages, frameworks, testing practices, and system design strengths you want to be known for.</p>
+        </article>
+        <article class="card">
+          <h3>Delivery skills</h3>
+          <p>Planning, debugging, collaboration, writing, and other habits that make you effective beyond code alone.</p>
+        </article>
+      </div>
+      <p class="note">
+        This section works best when it stays selective. The goal is to show range and judgment, not to reproduce a giant keyword list.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Personal Note</p>
+      <h2>End on something human</h2>
+      <p>
+        Keep a closing paragraph here that reconnects the CV to the person behind it. A short note about interests,
+        working style, motivation, or what kinds of problems you want to spend time on can make the page feel much more alive.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Updated whenever something is worth writing down · Hosted on <a href="https://pages.github.com">GitHub Pages</a></p>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById("darkBtn");
+    const icon = document.getElementById("darkIcon");
+    const text = document.getElementById("darkText");
+
+    function setTheme(theme) {
+      if (theme === "dark") {
+        root.setAttribute("data-theme", "dark");
+        icon.textContent = "○";
+        text.textContent = "Light";
+        localStorage.setItem("theme", "dark");
+      } else {
+        root.removeAttribute("data-theme");
+        icon.textContent = "◑";
+        text.textContent = "Dark";
+        localStorage.setItem("theme", "light");
+      }
+    }
+
+    const savedTheme = localStorage.getItem("theme");
+    setTheme(savedTheme === "dark" ? "dark" : "light");
+
+    btn.addEventListener("click", () => {
+      const isDark = root.getAttribute("data-theme") === "dark";
+      setTheme(isDark ? "light" : "dark");
+    });
+  </script>
+</body>
+</html>
