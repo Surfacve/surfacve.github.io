@@ -341,63 +341,87 @@
       color: var(--accent);
     }
 
-    .scroll-wheel {
+    .scroll-ruler {
       position: fixed;
+      top: 50%;
       right: 1.5rem;
-      bottom: 1.5rem;
-      width: 64px;
-      height: 64px;
-      border: 1px solid var(--rule);
-      border-radius: 50%;
-      background: rgba(249, 247, 242, 0.86);
-      display: grid;
-      place-items: center;
-      color: var(--ink-2);
+      width: 120px;
+      height: 440px;
+      transform: translateY(-50%);
       z-index: 20;
-      backdrop-filter: blur(8px);
-      transition: border-color 0.2s, color 0.2s, transform 0.2s ease;
     }
 
-    :root[data-theme="dark"] .scroll-wheel {
-      background: rgba(24, 24, 26, 0.86);
+    .scroll-ruler-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
-    .scroll-wheel:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .scroll-wheel svg {
-      width: 52px;
-      height: 52px;
-      transform: rotate(-90deg);
-    }
-
-    .scroll-wheel-track,
-    .scroll-wheel-progress {
-      fill: none;
-      stroke-width: 3;
-    }
-
-    .scroll-wheel-track {
-      stroke: var(--paper-3);
-    }
-
-    .scroll-wheel-progress {
-      stroke: var(--accent);
-      stroke-linecap: round;
-      stroke-dasharray: 138.2;
-      stroke-dashoffset: 138.2;
-      transition: stroke-dashoffset 0.12s linear;
-    }
-
-    .scroll-wheel-label {
+    .scroll-ruler-ticks {
       position: absolute;
+      inset: 0;
+    }
+
+    .scroll-ruler-tick {
+      position: absolute;
+      right: 0;
+      width: 96px;
+      height: 10px;
+      display: grid;
+      align-items: center;
+      justify-items: end;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .scroll-ruler-tick-line {
+      width: 10px;
+      height: 1px;
+      background: rgba(26, 26, 24, 0.14);
+      transition: width 0.12s ease, background-color 0.12s ease;
+    }
+
+    :root[data-theme="dark"] .scroll-ruler-tick-line {
+      background: rgba(232, 228, 218, 0.16);
+    }
+
+    .scroll-ruler-tick:hover .scroll-ruler-tick-line,
+    .scroll-ruler-tick.is-active .scroll-ruler-tick-line {
+      width: 18px;
+      background: var(--accent);
+    }
+
+    .scroll-ruler-marker {
+      position: absolute;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: top 0.08s linear;
+    }
+
+    .scroll-ruler-value {
       font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--accent);
+      min-width: 3.2rem;
+      text-align: right;
+    }
+
+    .scroll-ruler-line {
+      width: 18px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    @media (max-width: 980px) {
+      .scroll-ruler {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -534,13 +558,15 @@
     </div><!-- /#entries -->
   </main>
 
-  <button class="scroll-wheel" id="scrollWheel" type="button" aria-label="Scroll to top">
-    <svg viewBox="0 0 52 52" aria-hidden="true">
-      <circle class="scroll-wheel-track" cx="26" cy="26" r="22"></circle>
-      <circle class="scroll-wheel-progress" id="scrollWheelProgress" cx="26" cy="26" r="22"></circle>
-    </svg>
-    <span class="scroll-wheel-label" id="scrollWheelLabel">0%</span>
-  </button>
+  <div class="scroll-ruler" id="scrollRuler" aria-hidden="true">
+    <div class="scroll-ruler-inner">
+      <div class="scroll-ruler-ticks" id="scrollRulerTicks"></div>
+      <div class="scroll-ruler-marker" id="scrollRulerMarker">
+        <span class="scroll-ruler-value" id="scrollRulerValue">0.00</span>
+        <span class="scroll-ruler-line"></span>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <p>Updated whenever something is worth writing down &nbsp;·&nbsp; Hosted on <a href="https://pages.github.com" style="color:inherit">GitHub Pages</a></p>
@@ -551,10 +577,12 @@
     const btn = document.getElementById('darkBtn');
     const icon = document.getElementById('darkIcon');
     const text = document.getElementById('darkText');
-    const scrollWheel = document.getElementById('scrollWheel');
-    const scrollWheelProgress = document.getElementById('scrollWheelProgress');
-    const scrollWheelLabel = document.getElementById('scrollWheelLabel');
-    const wheelLength = 138.2;
+    const scrollRuler = document.getElementById('scrollRuler');
+    const scrollRulerTicks = document.getElementById('scrollRulerTicks');
+    const scrollRulerMarker = document.getElementById('scrollRulerMarker');
+    const scrollRulerValue = document.getElementById('scrollRulerValue');
+    const rulerHeight = 440;
+    const rulerTickCount = 45;
   
     function setTheme(theme) {
       if (theme === 'dark') {
@@ -578,23 +606,53 @@
       setTheme(isDark ? 'light' : 'dark');
     });
 
-    function updateScrollWheel() {
+    function getScrollProgress() {
       const scrollTop = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
-      const percent = Math.round(progress * 100);
-
-      scrollWheelProgress.style.strokeDashoffset = wheelLength * (1 - progress);
-      scrollWheelLabel.textContent = `${percent}%`;
+      return maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
     }
 
-    scrollWheel.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    function buildScrollRuler() {
+      scrollRulerTicks.innerHTML = '';
 
-    window.addEventListener('scroll', updateScrollWheel, { passive: true });
-    window.addEventListener('resize', updateScrollWheel);
-    updateScrollWheel();
+      for (let index = 0; index < rulerTickCount; index += 1) {
+        const progress = index / (rulerTickCount - 1);
+        const tick = document.createElement('button');
+        const line = document.createElement('span');
+
+        tick.type = 'button';
+        tick.className = 'scroll-ruler-tick';
+        tick.style.top = `${progress * rulerHeight}px`;
+        tick.setAttribute('aria-label', `Jump to ${Math.round(progress * 100)} percent`);
+
+        line.className = 'scroll-ruler-tick-line';
+        tick.appendChild(line);
+
+        tick.addEventListener('click', () => {
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          window.scrollTo({ top: maxScroll * progress, behavior: 'smooth' });
+        });
+
+        scrollRulerTicks.appendChild(tick);
+      }
+    }
+
+    function updateScrollRuler() {
+      const progress = getScrollProgress();
+      const activeIndex = Math.round(progress * (rulerTickCount - 1));
+
+      scrollRulerMarker.style.top = `${progress * rulerHeight}px`;
+      scrollRulerValue.textContent = progress.toFixed(2);
+
+      Array.from(scrollRulerTicks.children).forEach((tick, index) => {
+        tick.classList.toggle('is-active', index === activeIndex);
+      });
+    }
+
+    buildScrollRuler();
+    window.addEventListener('scroll', updateScrollRuler, { passive: true });
+    window.addEventListener('resize', updateScrollRuler);
+    updateScrollRuler();
   </script>
 </body>
 </html>
